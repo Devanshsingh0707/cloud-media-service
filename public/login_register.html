@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auth - Media Manager</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="auth.css"/>
+</head>
+<body>
+
+<div class="container" id="container">
+
+  <!-- ================= REGISTER ================= -->
+  <div class="form-container sign-up-container">
+    <form action="javascript:void(0)">
+      <h1>Registration</h1>
+
+      <!-- MESSAGE -->
+      <p class="msg" id="registerMsg"></p>
+
+      <div class="input-group">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="regEmail" placeholder="Email" required />
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="regPassword" placeholder="Password" required />
+      </div>
+
+      <button type="button" class="btn-main" onclick="register()">Register</button>
+
+      <p class="social-text">or register with social platforms</p>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-google"></i></a>
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-github"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= LOGIN ================= -->
+  <div class="form-container sign-in-container">
+    <form action="javascript:void(0)">
+      <h1>Login</h1>
+
+      <!-- MESSAGE -->
+      <p class="msg" id="loginMsg"></p>
+
+      <div class="input-group">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="loginEmail" placeholder="Email" required />
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="loginPassword" placeholder="Password" required />
+      </div>
+
+      <button type="button" class="btn-main" onclick="login()">Login</button>
+
+      <p class="social-text">or login with social platforms</p>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-google"></i></a>
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-github"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= OVERLAY ================= -->
+  <div class="overlay-container">
+    <div class="overlay">
+
+      <div class="overlay-panel overlay-left">
+        <h1>Welcome Back!</h1>
+        <p>Already have an account?</p>
+        <button class="ghost" id="signIn">Login</button>
+      </div>
+
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Welcome!</h1>
+        <p>Don't have an account?</p>
+        <button class="ghost" id="signUp">Register</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- JS -->
+<script src="auth.js"></script>
+
+<script>
+  const signUpButton = document.getElementById("signUp");
+  const signInButton = document.getElementById("signIn");
+  const container = document.getElementById("container");
+
+  signUpButton.addEventListener("click", () => {
+    container.classList.add("right-panel-active");
+  });
+
+  signInButton.addEventListener("click", () => {
+    container.classList.remove("right-panel-active");
+  });
+</script>
+
+</body>
+</html>

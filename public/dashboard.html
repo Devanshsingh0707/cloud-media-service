@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Media Manager</h1>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </header>
+
+  <section class="upload-section">
+    <div class="upload-card" id="dropZone">
+      <p id="fileLabel">Drag & Drop files here or</p>
+      <input type="file" id="fileInput" hidden>
+      
+      <div id="fileNameDisplay" style="margin-bottom: 15px; font-weight: bold; color: #4a90e2;"></div>
+      
+      <button class="btn-primary" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+      <button class="btn-upload" onclick="uploadFile()">Upload Now</button>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="gallery-section">
+    <h2>Your Uploads</h2>
+    <div class="media-grid" id="uploads">
+      </div>
+  </section>
+</div>
+
+<script src="upload.js"></script>
+</body>
+</html>

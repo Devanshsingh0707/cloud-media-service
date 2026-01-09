@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+<div class="auth-box">
+
+  <!-- LEFT FORM PANEL -->
+  <div class="panel">
+    <h2>Registration</h2>
+
+    <div class="input-box">
+      <input type="email" id="email" placeholder="Email">
+    </div>
+
+    <div class="input-box">
+      <input type="password" id="password" placeholder="Password">
+    </div>
+
+    <button class="primary" onclick="register()">Register</button>
+
+    <div class="social">
+      <p>or register with social platforms</p>
+      <div class="social-icons">
+        <span>G</span>
+        <span>f</span>
+        <span>in</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT BLUE PANEL -->
+  <div class="panel panel-blue" style="border-radius:60% 0 0 60%">
+    <h2>Welcome Back!</h2>
+    <p>Already have an account?</p>
+    <button onclick="location.href='/login.html'">Login</button>
+  </div>
+
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
