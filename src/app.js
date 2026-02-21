@@ -18,18 +18,19 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 // Serve frontend (public folder)
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Database (use env variable)
+// Database
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-// Routes
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api", uploadRoutes);
 
+// 🔥 Root route → Serve login page
 app.get("/", (req, res) => {
-  res.send("Cloud Media Service API Running");
+  res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
 // Server
