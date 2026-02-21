@@ -136,7 +136,7 @@ async function loadUploads() {
             <div class="thumbnail">${previewContent}</div>
             <div class="info">
                 <span class="filename" title="${file.filename}">${file.filename}</span>
-                <small class="filesize">${formatSize(file.size || 0)}</small>
+                ${file.size ? `<small class="filesize">${formatSize(file.size)}</small>` : ""}
                 <div class="actions">
                     <a href="${file.path}" download class="btn-action">Download</a>
                     <button class="btn-delete" onclick="deleteFile('${file._id}')">Delete</button>
@@ -164,3 +164,4 @@ async function deleteFile(id) {
 
 // INITIAL LOAD
 loadUploads();
+
