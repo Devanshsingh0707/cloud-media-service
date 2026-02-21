@@ -1,18 +1,18 @@
 /* ================= DASHBOARD ================= */
 
 :root {
-  --primary: #6366f1;        /* Indigo */
-  --primary-light: #eef2ff;
+  --primary: #4f46e5;
   --danger: #ef4444;
-  --bg: #f9fafb;
-  --card-bg: #ffffff;
-  --text-muted: #6b7280;
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --text-muted: #94a3b8;
 }
+
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--bg);
-  color: #333;
+  color: #f1f5f9;
   margin: 0;
   padding: 20px;
 }
@@ -46,7 +46,7 @@ body {
 
 .upload-card {
   background: var(--card-bg);
-  border: 2px dashed #ccc;
+  border: 2px dashed #334155;
   border-radius: 12px;
   padding: 40px;
   text-align: center;
@@ -88,7 +88,7 @@ body {
 /* ================= MEDIA CARDS ================= */
 
 .media-card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -206,4 +206,5 @@ button:disabled {
 .btn-action:hover {
   background: #ddd;
 }
+
 
