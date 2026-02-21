@@ -9,32 +9,63 @@
 <body>
 
 <div class="container">
-  <header>
+  <header class="dashboard-header">
     <h1>Media Manager</h1>
-    <button class="btn-logout" onclick="logout()">Logout</button>
+    <div class="header-actions">
+      <span class="file-count" id="fileCount">0 files</span>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
   </header>
 
+  <!-- ================= UPLOAD SECTION ================= -->
   <section class="upload-section">
     <div class="upload-card" id="dropZone">
       <p id="fileLabel">Drag & Drop files here or</p>
+
       <input type="file" id="fileInput" hidden>
-      
-      <div id="fileNameDisplay" style="margin-bottom: 15px; font-weight: bold; color: #4a90e2;"></div>
-      
-      <button class="btn-primary" onclick="document.getElementById('fileInput').click()">Browse Files</button>
-      <button class="btn-upload" onclick="uploadFile()">Upload Now</button>
+
+      <div id="fileNameDisplay" class="selected-file"></div>
+
+      <div class="upload-buttons">
+        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+        <button class="btn-upload" id="uploadBtn" onclick="uploadFile()">Upload Now</button>
+      </div>
+
+      <div id="uploadStatus" class="upload-status"></div>
     </div>
   </section>
 
   <hr>
 
+  <!-- ================= GALLERY SECTION ================= -->
   <section class="gallery-section">
     <h2>Your Uploads</h2>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <p>No files uploaded yet.</p>
+      <small>Upload your first file to get started 🚀</small>
+    </div>
+
     <div class="media-grid" id="uploads">
-      </div>
+      <!-- Files render here -->
+    </div>
   </section>
 </div>
 
 <script src="upload.js"></script>
+
+<script>
+  // 🔒 Protect Dashboard
+  if (!localStorage.getItem("token")) {
+    window.location.href = "/";
+  }
+
+  // Logout
+  function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  }
+</script>
+
 </body>
 </html>
