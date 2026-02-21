@@ -11,7 +11,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg);
+  background-color: linear-gradient(135deg, #eef2ff, #f8fafc);
   color: #f1f5f9;
   margin: 0;
   padding: 20px;
@@ -206,5 +206,6 @@ button:disabled {
 .btn-action:hover {
   background: #ddd;
 }
+
 
 
