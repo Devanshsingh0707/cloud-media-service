@@ -9,34 +9,35 @@ const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
-// Middleware
+// ================= MIDDLEWARE =================
 app.use(express.json());
 
-// Serve uploads folder (OUTSIDE src)
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// ================= STATIC FILES =================
 
-// Serve frontend (public folder)
+// 🔥 Serve uploads folder (INSIDE src)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// 🔥 Serve frontend (public folder at root level)
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Database
+// ================= DATABASE =================
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error(err));
+  .catch((err) => console.error("MongoDB error:", err));
 
-// API Routes
+// ================= API ROUTES =================
 app.use("/api/auth", authRoutes);
 app.use("/api", uploadRoutes);
 
-// 🔥 Root route → Serve login page
+// ================= ROOT ROUTE =================
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/login_register.html"));
 });
 
-// Server
+// ================= SERVER =================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
