@@ -1,9 +1,12 @@
-/*DASHBOARD*/
+/* ================= DASHBOARD ================= */
+
 :root {
   --primary: #4a90e2;
+  --primary-light: #eaf4ff;
   --danger: #ff4d4d;
   --bg: #f8f9fa;
   --card-bg: #ffffff;
+  --text-muted: #777;
 }
 
 body {
@@ -19,14 +22,28 @@ body {
   margin: 0 auto;
 }
 
-header {
+/* ================= HEADER ================= */
+
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
 }
 
-/* Upload Area */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.file-count {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ================= UPLOAD AREA ================= */
+
 .upload-card {
   background: var(--card-bg);
   border: 2px dashed #ccc;
@@ -38,10 +55,29 @@ header {
 
 .upload-card:hover {
   border-color: var(--primary);
-  background: #f0f7ff;
+  background: var(--primary-light);
 }
 
-/* Grid Layout */
+.selected-file {
+  margin: 10px 0 15px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.upload-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.upload-status {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* ================= GRID ================= */
+
 .media-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -49,17 +85,19 @@ header {
   margin-top: 20px;
 }
 
-/* Media Cards */
+/* ================= MEDIA CARDS ================= */
+
 .media-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .media-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
 
 .thumbnail {
@@ -80,22 +118,91 @@ header {
   display: block;
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Buttons */
+.filesize {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* ================= EMPTY STATE ================= */
+
+.empty-state {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--text-muted);
+}
+
+.empty-state small {
+  display: block;
+  margin-top: 5px;
+}
+
+/* ================= BUTTONS ================= */
+
 button {
   cursor: pointer;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   padding: 8px 15px;
   font-weight: 500;
+  transition: 0.2s;
 }
 
-.btn-primary { background: var(--primary); color: white; }
-.btn-logout { background: #6c757d; color: white; }
-.btn-delete { background: none; color: var(--danger); font-size: 12px; }
-.btn-action { background: #eee; color: #333; font-size: 12px; margin-right: 5px; }
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #3b7fd1;
+}
+
+.btn-upload {
+  background: #222;
+  color: white;
+}
+
+.btn-upload:hover {
+  background: #000;
+}
+
+.btn-logout {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-delete {
+  background: none;
+  color: var(--danger);
+  font-size: 12px;
+}
+
+.btn-delete:hover {
+  text-decoration: underline;
+}
+
+.btn-action {
+  background: #eee;
+  color: #333;
+  font-size: 12px;
+  margin-right: 5px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn-action:hover {
+  background: #ddd;
+}
