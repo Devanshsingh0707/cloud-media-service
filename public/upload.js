@@ -6,27 +6,24 @@ const fileInput = document.getElementById("fileInput");
 const fileNameDisplay = document.getElementById("fileNameDisplay");
 const fileLabel = document.getElementById("fileLabel");
 const uploadsContainer = document.getElementById("uploads");
+const uploadBtn = document.getElementById("uploadBtn");
+const uploadStatus = document.getElementById("uploadStatus");
+const emptyState = document.getElementById("emptyState");
+const fileCount = document.getElementById("fileCount");
 
 // 🔒 AUTH GUARD
 if (!token) {
-    alert("Please login first");
-    window.location.href = "/login_register.html";
-}
-
-// LOGOUT
-function logout() {
-    localStorage.removeItem("token");
-    window.location.href = "/login_register.html";
+    window.location.href = "/";
 }
 
 // =====================
-// FILE SELECTION LISTENER
+// FILE SELECTION
 // =====================
-fileInput.addEventListener('change', function() {
+fileInput.addEventListener("change", function () {
     if (fileInput.files.length > 0) {
-        const selectedFileName = fileInput.files[0].name;
-        fileNameDisplay.textContent = "Selected: " + selectedFileName;
-        fileLabel.style.display = 'none';
+        const selectedFile = fileInput.files[0];
+        fileNameDisplay.textContent = `Selected: ${selectedFile.name}`;
+        fileLabel.style.display = "none";
     } else {
         resetUploadUI();
     }
@@ -35,7 +32,16 @@ fileInput.addEventListener('change', function() {
 function resetUploadUI() {
     fileInput.value = "";
     fileNameDisplay.textContent = "";
-    fileLabel.style.display = 'block';
+    fileLabel.style.display = "block";
+}
+
+// =====================
+// FORMAT FILE SIZE
+// =====================
+function formatSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
 }
 
 // =====================
@@ -45,12 +51,18 @@ async function uploadFile() {
     const file = fileInput.files[0];
 
     if (!file) {
-        alert("Please select a file");
+        uploadStatus.textContent = "Please select a file.";
+        uploadStatus.style.color = "red";
         return;
     }
 
     const formData = new FormData();
     formData.append("file", file);
+
+    // Loader UI
+    uploadBtn.disabled = true;
+    uploadBtn.textContent = "Uploading...";
+    uploadStatus.textContent = "";
 
     try {
         const res = await fetch(`${API}/upload`, {
@@ -62,20 +74,29 @@ async function uploadFile() {
         const data = await res.json();
 
         if (!res.ok) {
-            alert(data.message || "Upload failed");
+            uploadStatus.textContent = data.message || "Upload failed";
+            uploadStatus.style.color = "red";
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = "Upload Now";
             return;
         }
 
-        alert("Upload successful");
-        resetUploadUI(); // ✨ Clears the "Selected: filename" text
+        uploadStatus.textContent = "Upload successful ✅";
+        uploadStatus.style.color = "green";
+
+        resetUploadUI();
         loadUploads();
     } catch (err) {
-        console.error("Upload error:", err);
+        uploadStatus.textContent = "Upload error.";
+        uploadStatus.style.color = "red";
     }
+
+    uploadBtn.disabled = false;
+    uploadBtn.textContent = "Upload Now";
 }
 
 // =====================
-// LOAD UPLOADS (Modern Card Grid)
+// LOAD UPLOADS
 // =====================
 async function loadUploads() {
     const res = await fetch(`${API}/uploads`, {
@@ -83,7 +104,6 @@ async function loadUploads() {
     });
 
     if (!res.ok) {
-        alert("Session expired. Login again.");
         logout();
         return;
     }
@@ -91,27 +111,39 @@ async function loadUploads() {
     const files = await res.json();
     uploadsContainer.innerHTML = "";
 
+    // Update count
+    fileCount.textContent = `${files.length} file${files.length !== 1 ? "s" : ""}`;
+
+    // Empty state
+    if (files.length === 0) {
+        emptyState.style.display = "block";
+        return;
+    } else {
+        emptyState.style.display = "none";
+    }
+
     files.forEach(file => {
-        // Create the modern card structure
         const card = document.createElement("div");
         card.className = "media-card";
 
-        // Check if it's an image to show a preview, otherwise show an icon placeholder
         const isImage = /\.(jpe?g|png|gif|webp)$/i.test(file.filename);
-        const previewContent = isImage 
-            ? `<img src="${file.path}" style="width:100%; height:100%; object-fit:cover;">` 
-            : `<span>📄</span>`;
+
+        const previewContent = isImage
+            ? `<img src="${file.path}" style="width:100%; height:100%; object-fit:cover;">`
+            : `<span style="font-size:40px;">📄</span>`;
 
         card.innerHTML = `
             <div class="thumbnail">${previewContent}</div>
             <div class="info">
                 <span class="filename" title="${file.filename}">${file.filename}</span>
+                <small class="filesize">${formatSize(file.size || 0)}</small>
                 <div class="actions">
                     <a href="${file.path}" download class="btn-action">Download</a>
                     <button class="btn-delete" onclick="deleteFile('${file._id}')">Delete</button>
                 </div>
             </div>
         `;
+
         uploadsContainer.appendChild(card);
     });
 }
@@ -120,7 +152,7 @@ async function loadUploads() {
 // DELETE FILE
 // =====================
 async function deleteFile(id) {
-    if (!confirm("Are you sure you want to delete this file?")) return;
+    if (!confirm("Delete this file?")) return;
 
     await fetch(`${API}/uploads/${id}`, {
         method: "DELETE",
