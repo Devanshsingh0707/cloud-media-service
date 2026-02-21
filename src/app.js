@@ -9,32 +9,32 @@ const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
-// middleware
+// Middleware
 app.use(express.json());
 
-// static folders
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Serve uploads folder (OUTSIDE src)
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
+// Serve frontend (public folder)
 app.use(express.static(path.join(__dirname, "../public")));
 
-// database
+// Database (use env variable)
 mongoose
-  .connect("mongodb://127.0.0.1:27017/file_upload_db")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
-app.use(express.static(path.join(__dirname, "../public")));
-
-// routes
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api", uploadRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Server is running");
+  res.send("Cloud Media Service API Running");
 });
 
-// server
-const PORT = 3000;
+// Server
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
