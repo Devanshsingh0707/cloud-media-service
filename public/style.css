@@ -1,12 +1,12 @@
 /* ================= DASHBOARD ================= */
 
 :root {
-  --primary: #4a90e2;
-  --primary-light: #eaf4ff;
-  --danger: #ff4d4d;
-  --bg: #f8f9fa;
+  --primary: #6366f1;        /* Indigo */
+  --primary-light: #eef2ff;
+  --danger: #ef4444;
+  --bg: #f9fafb;
   --card-bg: #ffffff;
-  --text-muted: #777;
+  --text-muted: #6b7280;
 }
 
 body {
@@ -206,3 +206,4 @@ button:disabled {
 .btn-action:hover {
   background: #ddd;
 }
+
